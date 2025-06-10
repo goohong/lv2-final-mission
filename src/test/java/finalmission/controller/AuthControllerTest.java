@@ -1,7 +1,6 @@
 package finalmission.controller;
 
 import static finalmission.TestFixture.memberCreateRequest;
-import static org.hamcrest.Matchers.is;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
