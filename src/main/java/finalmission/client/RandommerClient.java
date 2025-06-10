@@ -1,21 +1,32 @@
 package finalmission.client;
 
-import java.net.URI;
+import finalmission.dto.response.RandomNameResponse;
+import java.util.Objects;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+@Component
 public class RandommerClient {
-    private final RestClient.Builder client;
+    private final RestClient.Builder clientBuilder;
+    private final String secretKey;
 
-    public RandommerClient(final RestClient.Builder client) {
-        this.client = client;
+    public RandommerClient(final RestClient.Builder clientBuilder,
+                           @Value("${randommer-secret-key}") final String secretKey) {
+        this.clientBuilder = clientBuilder;
+        this.secretKey = secretKey;
     }
 
-    public String getRandomName() {
-        //TODO: 미완
-        return client.build()
+    public String getSingleRandomName() {
+        return Objects.requireNonNull(clientBuilder.build()
                 .get()
-                .uri(URI.create("/Name"))
+                .uri(uriBuilder -> uriBuilder
+                        .path("/Name")
+                        .queryParam("nameType", "fullname")
+                        .queryParam("quantity", 1)
+                        .build())
+                .header("X-Api-Key", secretKey)
                 .retrieve()
-                .body(String.class);
+                .body(String[].class))[0];
     }
 }

@@ -6,6 +6,7 @@ import finalmission.dto.request.MemberCreateRequest;
 import finalmission.dto.request.MemberSignupRequest;
 import finalmission.dto.response.MemberResponse;
 import finalmission.service.MemberService;
+import finalmission.service.RandommerService;
 import finalmission.util.JwtTokenProvider;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,15 +20,22 @@ public class AuthController {
 
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RandommerService randommerService;
 
-    public AuthController(final MemberService memberService, final JwtTokenProvider jwtTokenProvider) {
+    public AuthController(final MemberService memberService, final JwtTokenProvider jwtTokenProvider,
+                          final RandommerService randommerService) {
         this.memberService = memberService;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.randommerService = randommerService;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<MemberResponse> signup(@RequestBody MemberSignupRequest request) {
-        MemberCreateRequest memberCreateRequest = new MemberCreateRequest(request.name(), request.email(),
+        String name = request.name();
+        if (request.name() == null) {
+            name = randommerService.generateRandomName();
+        }
+        MemberCreateRequest memberCreateRequest = new MemberCreateRequest(name, request.email(),
                 request.password(), request.role());
         return ResponseEntity.ok(memberService.create(memberCreateRequest));
     }

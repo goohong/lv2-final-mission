@@ -30,6 +30,7 @@ public class Member {
     }
 
     private Member(final Long id, final String name, final String email, final String password, final Role role) {
+
         this.id = id;
         this.name = name;
         this.email = email;
