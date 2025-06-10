@@ -17,4 +17,24 @@ public class ReservationTime {
 
     @Column(nullable = false, unique = true)
     LocalTime time;
+
+    private ReservationTime(final Long id, final LocalTime time) {
+        this.id = id;
+        this.time = time;
+    }
+
+    protected ReservationTime() {
+    }
+
+    public static ReservationTime withoutId(final LocalTime time) {
+        return new ReservationTime(null, time);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
 }

@@ -1,6 +1,7 @@
 package finalmission.controller;
 
-import static finalmission.TextFixture.memberCreateRequest;
+import static finalmission.TestFixture.memberCreateRequest;
+import static org.hamcrest.Matchers.is;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -13,7 +14,6 @@ class AuthControllerTest {
 
     @Test
     void signup_shouldCreateMember() {
-
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
                 .body(memberCreateRequest)

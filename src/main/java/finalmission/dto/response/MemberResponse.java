@@ -5,15 +5,13 @@ import finalmission.domain.Member;
 public record MemberResponse(
         Long id,
         String name,
-        String email,
-        String password
+        String email
 ) {
     public static MemberResponse from(final Member savedMember) {
         return new MemberResponse(
                 savedMember.getId(),
                 savedMember.getName(),
-                savedMember.getEmail(),
-                savedMember.getPassword()
+                savedMember.getEmail()
         );
     }
 }
