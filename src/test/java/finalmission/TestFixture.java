@@ -1,12 +1,21 @@
 package finalmission;
 
-import finalmission.dto.request.SportCreateRequest;
 import finalmission.dto.request.MemberCreateRequest;
+import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.request.ReservationTimeCreateRequest;
+import finalmission.dto.request.SportCreateRequest;
 import finalmission.dto.response.MemberResponse;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class TestFixture {
+    public static ReservationCreateRequest reservationCreateRequest = new ReservationCreateRequest(
+            LocalDate.now().plusDays(1),
+            1L,
+            1L,
+            1L
+    );
+
     public static ReservationTimeCreateRequest reservationTimeCreateRequest = new ReservationTimeCreateRequest(
             LocalTime.of(12, 0)
     );

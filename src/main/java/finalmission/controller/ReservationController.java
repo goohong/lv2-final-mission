@@ -1,8 +1,8 @@
 package finalmission.controller;
 
-import finalmission.dto.request.SportCreateRequest;
-import finalmission.dto.response.SportResponse;
-import finalmission.service.SportService;
+import finalmission.dto.request.ReservationCreateRequest;
+import finalmission.dto.response.ReservationResponse;
+import finalmission.service.ReservationService;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -15,29 +15,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sports")
-public class SportController {
+@RequestMapping("/reservations")
+public class ReservationController {
 
-    private final SportService sportService;
+    private final ReservationService reservationService;
 
-    public SportController(final SportService sportService) {
-        this.sportService = sportService;
+    public ReservationController(final ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     @GetMapping
-    public ResponseEntity<List<SportResponse>> getAllReservations() {
-        return ResponseEntity.ok(sportService.getAll());
+    public ResponseEntity<List<ReservationResponse>> getAllReservations() {
+        return ResponseEntity.ok(reservationService.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<SportResponse> createReservation(@RequestBody SportCreateRequest request) {
-        SportResponse response = sportService.create(request);
+    public ResponseEntity<ReservationResponse> createReservation(@RequestBody ReservationCreateRequest request) {
+        ReservationResponse response = reservationService.create(request);
         return ResponseEntity.created(URI.create("reservations/" + response.id())).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeReservation(@PathVariable("id") Long id) {
-        sportService.removeSport(id);
+        reservationService.removeReservation(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -28,4 +28,40 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ReservationTime time;
+
+    private Reservation(final Long id, final LocalDate date, final Member member, final Sport sport,
+                        final ReservationTime time) {
+        this.id = id;
+        this.date = date;
+        this.member = member;
+        this.sport = sport;
+        this.time = time;
+    }
+
+    protected Reservation() {
+    }
+
+    public static Reservation withoutId(LocalDate date, Member member, Sport sport, ReservationTime time) {
+        return new Reservation(null, date, member, sport, time);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Sport getSport() {
+        return sport;
+    }
+
+    public ReservationTime getTime() {
+        return time;
+    }
 }

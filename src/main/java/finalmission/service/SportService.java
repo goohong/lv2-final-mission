@@ -3,7 +3,9 @@ package finalmission.service;
 import finalmission.domain.Sport;
 import finalmission.dto.request.SportCreateRequest;
 import finalmission.dto.response.SportResponse;
+import finalmission.exception.InvalidRequestException;
 import finalmission.exception.NotFoundException;
+import finalmission.repository.ReservationRepository;
 import finalmission.repository.SportRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SportService {
     private final SportRepository sportRepository;
+    private final ReservationRepository reservationRepository;
 
-    public SportService(final SportRepository sportRepository) {
+    public SportService(final SportRepository sportRepository, final ReservationRepository reservationRepository) {
         this.sportRepository = sportRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public SportResponse create(SportCreateRequest request) {
@@ -21,10 +25,15 @@ public class SportService {
         return SportResponse.from(savedSport);
     }
 
-    public void removeReservation(final Long id) {
+    public void removeSport(final Long id) {
         if (!sportRepository.existsById(id)) {
             throw new NotFoundException();
         }
+
+        if (reservationRepository.findBySportId(id)) {
+            throw new InvalidRequestException("예약이 이미 존재하고 있어 삭제할 수 없습니다.");
+        }
+
         sportRepository.deleteById(id);
     }
 
@@ -33,4 +42,10 @@ public class SportService {
                 .map(SportResponse::from)
                 .toList();
     }
+
+    public Sport find(Long id) {
+        return sportRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+    }
+
 }
