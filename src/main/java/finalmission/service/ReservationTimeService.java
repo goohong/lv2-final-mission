@@ -31,7 +31,7 @@ public class ReservationTimeService {
             throw new NotFoundException();
         }
 
-        if (reservationRepository.findByTimeId(id)) {
+        if (reservationRepository.existsByTimeId(id)) {
             throw new InvalidRequestException("예약이 존재하고 있어 삭제할 수 없습니다");
         }
 

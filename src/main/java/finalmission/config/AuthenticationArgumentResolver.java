@@ -3,6 +3,7 @@ package finalmission.config;
 import finalmission.domain.Member;
 import finalmission.dto.LoginInfo;
 import finalmission.service.MemberService;
+import finalmission.util.JwtTokenProvider;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import finalmission.util.JwtTokenProvider;
 
 @Component
 public class AuthenticationArgumentResolver implements HandlerMethodArgumentResolver {

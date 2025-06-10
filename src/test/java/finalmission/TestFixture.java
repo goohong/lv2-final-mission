@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class TestFixture {
+    public static String testToken =
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmFtZSI6IkRhbm55Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzQ5NTQxNzE1LCJleHAiOjE3NDk5MDE3MTV9.gZW0DfZjkwQzJIw0JtWcWpyGsO9naCA8WnwwGAlILTw";
+
     public static ReservationCreateRequest reservationCreateRequest = new ReservationCreateRequest(
             LocalDate.now().plusDays(1),
             1L,

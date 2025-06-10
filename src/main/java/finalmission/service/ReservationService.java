@@ -6,6 +6,7 @@ import finalmission.domain.ReservationTime;
 import finalmission.domain.Sport;
 import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.response.ReservationResponse;
+import finalmission.exception.InvalidRequestException;
 import finalmission.exception.NotFoundException;
 import finalmission.repository.ReservationRepository;
 import java.util.List;
@@ -30,6 +31,18 @@ public class ReservationService {
         Member member = memberService.find(request.memberId());
         ReservationTime time = reservationTimeService.find(request.timeId());
         Sport sport = sportService.find(request.sportId());
+
+        if (reservationRepository.existsByMemberId(request.memberId())) {
+            throw new InvalidRequestException("한 사용자가 여러번 예약할 수 없습니다");
+        }
+
+        if (reservationRepository.countReservationsByDateAndTimeIdAndSportId(
+                request.date(),
+                request.timeId(),
+                request.sportId()) >= sport.getReservationLimit()
+        ) {
+            throw new InvalidRequestException("최대 예약자 수에 도달하여 예약할 수 없습니다");
+        }
 
         Reservation savedReservation = reservationRepository.save(
                 Reservation.withoutId(request.date(), member, sport, time));

@@ -30,7 +30,7 @@ public class SportService {
             throw new NotFoundException();
         }
 
-        if (reservationRepository.findBySportId(id)) {
+        if (reservationRepository.existsBySportId(id)) {
             throw new InvalidRequestException("예약이 이미 존재하고 있어 삭제할 수 없습니다.");
         }
 

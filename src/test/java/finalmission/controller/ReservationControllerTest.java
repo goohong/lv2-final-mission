@@ -4,6 +4,7 @@ import static finalmission.TestFixture.memberCreateRequest;
 import static finalmission.TestFixture.reservationCreateRequest;
 import static finalmission.TestFixture.reservationTimeCreateRequest;
 import static finalmission.TestFixture.sportCreateRequest;
+import static finalmission.TestFixture.testToken;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -23,7 +24,7 @@ class ReservationControllerTest {
                 .then().log().all()
                 .statusCode(200);
 
-        RestAssured.given().log().all()
+        RestAssured.given().log().all().cookie("token", testToken)
                 .contentType(ContentType.JSON)
                 .body(sportCreateRequest)
                 .when().post("/sports")
@@ -49,8 +50,9 @@ class ReservationControllerTest {
                 .then()
                 .statusCode(200);
 
-        RestAssured.given().log().all()
-                .when().delete("/reservations/1")
+        RestAssured.given().log().all().cookie("token", testToken)
+                .when()
+                .delete("/reservations")
                 .then()
                 .statusCode(204);
     }
