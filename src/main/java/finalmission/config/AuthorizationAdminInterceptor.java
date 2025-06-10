@@ -1,0 +1,31 @@
+package finalmission.config;
+
+import finalmission.domain.Role;
+import finalmission.exception.AccessDeniedException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+import finalmission.util.JwtTokenProvider;
+
+@Component
+public class AuthorizationAdminInterceptor implements HandlerInterceptor {
+    private final JwtTokenProvider tokenProvider;
+
+    public AuthorizationAdminInterceptor(final JwtTokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
+
+    @Override
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler)
+            throws Exception {
+        Cookie[] cookies = request.getCookies();
+        String token = tokenProvider.extractTokenFromCookie(cookies);
+        Role role = tokenProvider.extractRole(token);
+        if (!Role.isAdmin(role)) {
+            throw new AccessDeniedException("관리자 권한이 필요합니다");
+        }
+        return true;
+    }
+}

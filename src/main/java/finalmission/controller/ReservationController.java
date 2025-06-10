@@ -1,5 +1,6 @@
 package finalmission.controller;
 
+import finalmission.dto.LoginInfo;
 import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.response.ReservationResponse;
 import finalmission.service.ReservationService;
@@ -35,9 +36,9 @@ public class ReservationController {
         return ResponseEntity.created(URI.create("reservations/" + response.id())).body(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeReservation(@PathVariable("id") Long id) {
-        reservationService.removeReservation(id);
+    @DeleteMapping
+    public ResponseEntity<Void> removeReservation(LoginInfo loginInfo) {
+        reservationService.removeReservation(loginInfo.id());
         return ResponseEntity.noContent().build();
     }
 }

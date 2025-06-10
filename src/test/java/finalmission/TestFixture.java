@@ -1,5 +1,6 @@
 package finalmission;
 
+import finalmission.domain.Role;
 import finalmission.dto.request.MemberCreateRequest;
 import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.request.ReservationTimeCreateRequest;
@@ -29,7 +30,8 @@ public class TestFixture {
     public static MemberCreateRequest memberCreateRequest = new MemberCreateRequest(
             "Danny",
             "danny@example.com",
-            "password"
+            "password",
+            Role.ADMIN
     );
 
     public static MemberResponse expectedMemberResponse = new MemberResponse(

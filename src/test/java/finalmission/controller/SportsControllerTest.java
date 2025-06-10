@@ -1,6 +1,5 @@
 package finalmission.controller;
 
-import static finalmission.TestFixture.reservationTimeCreateRequest;
 import static finalmission.TestFixture.sportCreateRequest;
 
 import io.restassured.RestAssured;

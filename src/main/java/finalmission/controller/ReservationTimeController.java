@@ -1,5 +1,6 @@
 package finalmission.controller;
 
+import finalmission.dto.LoginInfo;
 import finalmission.dto.request.ReservationTimeCreateRequest;
 import finalmission.dto.response.ReservationTimeResponse;
 import finalmission.service.ReservationTimeService;
@@ -8,7 +9,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +36,9 @@ public class ReservationTimeController {
         return ResponseEntity.created(URI.create("times/" + response.id())).body(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeReservationTime(@PathVariable("id") Long id) {
-        reservationTimeService.removeReservationTime(id);
+    @DeleteMapping
+    public ResponseEntity<Void> removeReservationTime(LoginInfo loginInfo) {
+        reservationTimeService.removeReservationTime(loginInfo.id());
         return ResponseEntity.noContent().build();
     }
 }

@@ -23,18 +23,22 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Role role = Role.USER;
+
     protected Member() {
     }
 
-    private Member(final Long id, final String name, final String email, final String password) {
+    private Member(final Long id, final String name, final String email, final String password, final Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
-    public static Member withoutId(String name, String email, String password) {
-        return new Member(null, name, email, password);
+    public static Member withoutId(String name, String email, String password, Role role) {
+        return new Member(null, name, email, password, role);
     }
 
     public Long getId() {
@@ -51,5 +55,9 @@ public class Member {
 
     public String getPassword() {
         return password;
+    }
+
+    public Role getRole() {
+        return role;
     }
 }
